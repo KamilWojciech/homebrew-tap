@@ -11,13 +11,24 @@ class GitMsgPrefix < Formula
     FileUtils.chmod 0555, lib + 'git-hook/prepare-commit-msg'
     homeDir = File.expand_path("~" + ENV['USER'])
     gitHookFile = homeDir + '/.git-templates/hooks/prepare-commit-msg'
-    if File.exist?(gitHookFile)
-      print "File '" + gitHookFile + "' already exists! Do you want to replace it? [Y/n]: "
-      input = STDIN.gets.strip
-      if input.downcase == 'y'
-        File.delete gitHookFile
-        FileUtils.ln_s lib + 'git-hook/prepare-commit-msg', gitHookFile
+
+    linked = false
+    if File.symlink?(gitHookFile)
+      symlinkTarget = File.readlink(gitHookFile)
+      if File.fnmatch File.expand_path(prefix + '../') + '**prepare-commit-msg', symlinkTarget
+        linked = true
       end
     end
+
+    if File.exist?(gitHookFile) && !linked
+      print "File '" + gitHookFile + "' already exists! Do you want to replace it? [Y/n]: "
+      input = STDIN.gets.strip
+      if input.downcase != 'y'
+        return false
+      end
+    end
+
+    File.delete gitHookFile
+    FileUtils.ln_s lib + 'git-hook/prepare-commit-msg', gitHookFile
   end
 end
