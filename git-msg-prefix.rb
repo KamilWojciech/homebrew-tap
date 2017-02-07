@@ -11,6 +11,7 @@ class GitMsgPrefix < Formula
     FileUtils.chmod 0555, lib + 'git-hook/prepare-commit-msg'
     homeDir = File.expand_path("~" + ENV['USER'])
     gitHookFile = homeDir + '/.git-templates/hooks/prepare-commit-msg'
+    FileUtils.mkdir_p(gitHookFile) unless File.exists?(gitHookFile)
 
     linked = false
     if File.symlink?(gitHookFile)
