@@ -1,8 +1,8 @@
 class GitMsgPrefix < Formula
   desc ""
   homepage "https://github.com/KamilWojciech/git-msg-prefix"
-  url "https://github.com/KamilWojciech/git-msg-prefix/archive/.tar.gz"
-  version "{{VERSION}}"
+  url "https://github.com/KamilWojciech/git-msg-prefix/archive/1.0.7-dev.tar.gz"
+  version "1.0.7-dev"
   sha256 "{{SHA256_SUM}}"
 
   def install
