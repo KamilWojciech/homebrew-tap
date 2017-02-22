@@ -1,9 +1,9 @@
 class GitMsgPrefix < Formula
   desc ""
   homepage "https://github.com/KamilWojciech/git-msg-prefix"
-  url "https://github.com/KamilWojciech/git-msg-prefix/releases/download/1.2.2/git-msg-prefix-1.2.2.tar.gz"
-  version "1.2.2"
-  sha256 "c4c0dfc504a451fe726b98a3afaca975a910b79652a122636400835d959d4b69"
+  url "https://github.com/KamilWojciech/git-msg-prefix/releases/download/1.2.3/git-msg-prefix-1.2.3.tar.gz"
+  version "1.2.3"
+  sha256 "a89e82814c76906f98f82592adfb203feac05bf3817a74150cbc9b14e983ec5d"
 
   def install
     bin.install "bin/git-msg-prefix"
@@ -30,8 +30,10 @@ class GitMsgPrefix < Formula
       end
     end
 
+    libLinkFile = "/usr/local/lib/prepare-commit-msg"
     File.delete gitHookFile unless !File.exists?(gitHookFile)
     lib.install_symlink lib + 'git-hook/prepare-commit-msg'
-    FileUtils.ln_s '/usr/local/lib/prepare-commit-msg', gitHookFile
+    File.delete libLinkFile unless !File.exists?(libLinkFile)
+    FileUtils.ln_s libLinkFile, gitHookFile
   end
 end
